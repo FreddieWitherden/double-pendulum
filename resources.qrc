@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/icons" >
+        <file>resources/media-playback-pause.svg</file>
+        <file>resources/media-playback-start.svg</file>
+        <file>resources/media-playback-stop.svg</file>
+        <file>resources/list-add.svg</file>
+        <file>resources/list-remove.svg</file>
+    </qresource>
+</RCC>
