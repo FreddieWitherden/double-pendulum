@@ -263,6 +263,6 @@ void MainWindow::setDefaults()
     ui->lowerColour->setColour(Qt::blue);
     ui->opacity->setValue(100);
 
-    // Force an update
-    updatePendulum();
+    // Update the pendulum's icon
+    updatePendulumIcon(ui->upperColour->colour());
 }
