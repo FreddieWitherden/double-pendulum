@@ -38,10 +38,10 @@ protected slots:
     void timerEvent(QTimerEvent *event);
 
 private:
-    int timerId;
-    const int timeStep;
-    double simTime;
-    bool isPaused;
+    int m_timerId;
+    const int m_timeStep;
+    double m_simTime;
+    bool m_isPaused;
 };
 
 #endif // DOUBLEPENDULUMWIDGET_H
