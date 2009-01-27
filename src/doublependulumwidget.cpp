@@ -114,14 +114,8 @@ void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
 
-    if (height() > width())
-    {
-        m_scaleFactor = width() / 10.0;
-    }
-    else
-    {
-        m_scaleFactor = height() / 10.0;
-    }
+    // Ensure the range of the smaller axis is between 0..m_scale
+    m_scaleFactor = qMin(width(), height()) / m_scale;
 
     foreach (QGraphicsItem *item, scene()->items())
     {
