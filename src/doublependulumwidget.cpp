@@ -23,7 +23,7 @@
 #include <QGraphicsScene>
 
 DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
-    QGraphicsView(parent), m_timerId(0), m_timeStep(1000 / 60),
+    QGraphicsView(parent), m_scale(10.0), m_timerId(0), m_timeStep(1000 / 60),
     m_isPaused(false)
 {
     // Create a scene to store the pendulums
@@ -90,6 +90,11 @@ double DoublePendulumWidget::time()
     return m_simTime;
 }
 
+double DoublePendulumWidget::pendulumScaleFactor()
+{
+    return m_scaleFactor;
+}
+
 void DoublePendulumWidget::timerEvent(QTimerEvent *)
 {
     // Make sure we are not currently paused
@@ -103,4 +108,28 @@ void DoublePendulumWidget::timerEvent(QTimerEvent *)
 
     // Update the scene
     scene()->advance();
+}
+
+void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
+{
+    QGraphicsView::resizeEvent(event);
+
+    if (height() > width())
+    {
+        m_scaleFactor = width() / 10.0;
+    }
+    else
+    {
+        m_scaleFactor = height() / 10.0;
+    }
+
+    foreach (QGraphicsItem *item, scene()->items())
+    {
+        // If the item is a pendulum
+        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
+        {
+            pendulum->resetMatrix();
+            pendulum->scale(m_scaleFactor, m_scaleFactor);
+        }
+    }
 }

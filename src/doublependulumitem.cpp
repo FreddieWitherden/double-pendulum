@@ -26,6 +26,9 @@
 DoublePendulumItem::DoublePendulumItem(DoublePendulumWidget *pendulumWidget)
     : m_pendulumView(pendulumWidget), m_pendulum(0)
 {
+    // Normalise the coordinate system
+    scale(m_pendulumView->pendulumScaleFactor(),
+          m_pendulumView->pendulumScaleFactor());
 }
 
 DoublePendulumItem::~DoublePendulumItem()
@@ -127,8 +130,10 @@ void DoublePendulumItem::setOpacity(int opacity)
 
 QRectF DoublePendulumItem::boundingRect() const
 {
-    return QRectF(0, 0, m_pendulumView->scene()->width(),
-                  m_pendulumView->scene()->height());
+    QMatrix m = matrix();
+
+    return QRectF(0, 0, m_pendulumView->scene()->width() / m.m11(),
+                  m_pendulumView->scene()->height() / m.m22());
 }
 
 void DoublePendulumItem::paint(QPainter *painter,
@@ -142,12 +147,12 @@ void DoublePendulumItem::paint(QPainter *painter,
     }
 
     // Location of the upper bob
-    QPointF upperBob(m_pendulum->l1() * 50 * sin(m_pendulum->theta1()),
-                     m_pendulum->l1() * 50 * cos(m_pendulum->theta1()));
+    QPointF upperBob(m_pendulum->l1() * sin(m_pendulum->theta1()),
+                     m_pendulum->l1() * cos(m_pendulum->theta1()));
 
     // Location of the power bob
-    QPointF lowerBob(upperBob.x() + m_pendulum->l2() * 50 * sin(m_pendulum->theta2()),
-                     upperBob.y() + m_pendulum->l2() * 50 * cos(m_pendulum->theta2()));
+    QPointF lowerBob(upperBob.x() + m_pendulum->l2() * sin(m_pendulum->theta2()),
+                     upperBob.y() + m_pendulum->l2() * cos(m_pendulum->theta2()));
 
     QPointF linePoints[] =
     {
@@ -160,7 +165,7 @@ void DoublePendulumItem::paint(QPainter *painter,
     QColor lineColour = Qt::black;
     lineColour.setAlphaF(opacity() / 100.0);
 
-    painter->setPen(QPen(lineColour, 2));
+    painter->setPen(QPen(lineColour, 0.04));
     painter->drawPolyline(linePoints, 3);
 
     painter->setPen(Qt::NoPen);
@@ -170,14 +175,14 @@ void DoublePendulumItem::paint(QPainter *painter,
     actualUpperColour.setAlphaF(m_opacity / 100.0);
 
     painter->setBrush(QBrush(actualUpperColour));
-    painter->drawEllipse(upperBob, 10.0, 10.0);
+    painter->drawEllipse(upperBob, 0.2, 0.2);
 
     // Finally the lower bob
     QColor actualLowerColour = m_lowerColour;
     actualLowerColour.setAlphaF(m_opacity / 100.0);
 
     painter->setBrush(QBrush(actualLowerColour));
-    painter->drawEllipse(lowerBob, 10.0, 10.0);
+    painter->drawEllipse(lowerBob, 0.2, 0.2);
 }
 
 void DoublePendulumItem::advance(int)

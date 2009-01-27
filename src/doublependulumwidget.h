@@ -34,10 +34,16 @@ public:
 
     double time();
 
+    double pendulumScaleFactor();
+
 protected slots:
     void timerEvent(QTimerEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private:
+    double m_scaleFactor;
+    double m_scale;
+
     int m_timerId;
     const int m_timeStep;
     double m_simTime;
