@@ -61,10 +61,17 @@ public:
 
     QRectF boundingRect() const;
 
+    int type() const;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
     virtual void advance(int phase);
+
+    enum
+    {
+        Type = UserType + 1
+    };
 
 private:
     DoublePendulumWidget *m_pendulumView;
@@ -72,7 +79,6 @@ private:
     DoublePendulum *m_pendulum;
 
     QString m_solver;
-
     double m_dt;
     double m_g;
 

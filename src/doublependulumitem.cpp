@@ -130,10 +130,21 @@ void DoublePendulumItem::setOpacity(int opacity)
 
 QRectF DoublePendulumItem::boundingRect() const
 {
-    QMatrix m = matrix();
+    if (!m_pendulum)
+    {
+        return QRectF(0.0, 0.0, 0.0, 0.0);
+    }
+    else
+    {
+        const double max = m_pendulum->l1() + m_pendulum->l2() + 0.2;
 
-    return QRectF(0, 0, m_pendulumView->scene()->width() / m.m11(),
-                  m_pendulumView->scene()->height() / m.m22());
+        return QRectF(QPointF(-max, -max), QPointF(max, max));
+    }
+}
+
+int DoublePendulumItem::type() const
+{
+    return Type;
 }
 
 void DoublePendulumItem::paint(QPainter *painter,
@@ -196,6 +207,5 @@ void DoublePendulumItem::advance(int)
         m_pendulum->update(actualTime);
     }
 
-    // Request a re-paint
-    update();
+    prepareGeometryChange();
 }
