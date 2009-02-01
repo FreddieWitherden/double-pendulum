@@ -92,7 +92,7 @@ double DoublePendulumWidget::time()
 
 double DoublePendulumWidget::pendulumScaleFactor()
 {
-    return m_scaleFactor;
+    return m_pScaleFactor;
 }
 
 void DoublePendulumWidget::timerEvent(QTimerEvent *)
@@ -114,16 +114,13 @@ void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
 
-    // Ensure the range of the smaller axis is between 0..m_scale
-    m_scaleFactor = qMin(width(), height()) / m_scale;
+    // Make the scene ever so slightly smaller than the view
+    QRectF newSceneRect(-width() / 2.0, -height() / 2.0, width(), height());
+    newSceneRect.adjust(0.0, 0.0, -5.0, -5.0);
 
-    foreach (QGraphicsItem *item, scene()->items())
-    {
-        // If the item is a pendulum
-        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
-        {
-            pendulum->resetMatrix();
-            pendulum->scale(m_scaleFactor, m_scaleFactor);
-        }
-    }
+    // Ensure the range of the smaller axis is between 0..m_scale
+    m_pScaleFactor = qMin(newSceneRect.width(), newSceneRect.height()) / m_scale;
+
+    // Update the scene rect
+    setSceneRect(newSceneRect);
 }

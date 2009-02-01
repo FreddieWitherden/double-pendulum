@@ -26,9 +26,6 @@
 DoublePendulumItem::DoublePendulumItem(DoublePendulumWidget *pendulumWidget)
     : m_pendulumView(pendulumWidget), m_pendulum(0)
 {
-    // Normalise the coordinate system
-    scale(m_pendulumView->pendulumScaleFactor(),
-          m_pendulumView->pendulumScaleFactor());
 }
 
 DoublePendulumItem::~DoublePendulumItem()
@@ -136,7 +133,8 @@ QRectF DoublePendulumItem::boundingRect() const
     }
     else
     {
-        const double max = m_pendulum->l1() + m_pendulum->l2() + 0.2;
+        const double max = (m_pendulum->l1() + m_pendulum->l2() + 0.2)
+                          * m_pendulumView->pendulumScaleFactor();
 
         return QRectF(QPointF(-max, -max), QPointF(max, max));
     }
@@ -156,6 +154,9 @@ void DoublePendulumItem::paint(QPainter *painter,
     {
         return;
     }
+
+    const double sf = m_pendulumView->pendulumScaleFactor();
+    painter->scale(sf, sf);
 
     // Location of the upper bob
     QPointF upperBob(m_pendulum->l1() * sin(m_pendulum->theta1()),

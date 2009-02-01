@@ -41,9 +41,6 @@
       <property name="styleSheet">
        <string>background: transparent;</string>
       </property>
-      <property name="interactive">
-       <bool>false</bool>
-      </property>
       <property name="renderHints">
        <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing</set>
       </property>
