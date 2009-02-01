@@ -264,6 +264,9 @@ void MainWindow::updatePendulumIcon(const QColor& colour)
 
 void MainWindow::setDefaults()
 {
+    // Mask update events
+    m_maskUpdates = true;
+
     ui->odeSolver->setCurrentIndex(ui->odeSolver->findText("Euler"));
     ui->dt->setValue(0.005);
     ui->g->setValue(9.81);
@@ -281,6 +284,10 @@ void MainWindow::setDefaults()
     ui->upperColour->setColour(Qt::red);
     ui->lowerColour->setColour(Qt::blue);
     ui->opacity->setValue(100);
+
+    // Unmask update events and force an update
+    m_maskUpdates = false;
+    updatePendulum();
 
     // Update the pendulum's icon
     updatePendulumIcon(ui->upperColour->colour());
