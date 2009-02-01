@@ -41,7 +41,7 @@ protected slots:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    double m_scaleFactor;
+    double m_pScaleFactor;
     double m_scale;
 
     int m_timerId;
