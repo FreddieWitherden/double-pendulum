@@ -42,8 +42,8 @@ void ColourPicker::setColour(const QColor& colour)
 {
     m_colour = colour;
 
-    // Create a pixmap slightly smaller than the button to be used as an icon
-    QPixmap pix(rect().adjusted(3, 3, -5, -5).size());
+    // Create a pixmap to use as our 'icon'
+    QPixmap pix(iconSize());
     QPainter painter(&pix);
 
     // Paint the colour to a rectangle
