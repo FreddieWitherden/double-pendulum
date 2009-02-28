@@ -49,7 +49,7 @@ void ColourPicker::setColour(const QColor& colour)
     // Paint the colour to a rectangle
     painter.setBrush(colour);
     painter.setPen(Qt::gray);
-    painter.drawRect(rect().adjusted(0, 0, -1, -1));
+    painter.drawRect(pix.rect().adjusted(0, 0, -1, -1));
 
     // Set the pixmap as the buttons icon
     setIcon(QIcon(pix));
