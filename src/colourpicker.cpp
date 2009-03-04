@@ -72,4 +72,3 @@ void ColourPicker::selfClicked()
         emit colourChanged(c);
     }
 }
-
