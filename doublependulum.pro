@@ -23,3 +23,8 @@ HEADERS += src/mainwindow.h \
     src/doublependulumitem.h
 FORMS += src/mainwindow.ui
 RESOURCES += resources.qrc
+
+mac {
+    ICON = icon.icns
+    TARGET = "Double Pendulum"
+}
