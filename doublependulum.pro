@@ -3,6 +3,7 @@
 # -------------------------------------------------
 TARGET = doublependulum
 TEMPLATE = app
+QT += svg
 DEPENDPATH += . \
     src
 INCLUDEPATH += src
@@ -27,4 +28,8 @@ RESOURCES += resources.qrc
 mac {
     ICON = icon.icns
     TARGET = "Double Pendulum"
+
+    release {
+        CONFIG += ppc x86
+    }
 }
