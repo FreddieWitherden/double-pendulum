@@ -237,7 +237,7 @@ void MainWindow::updatePendulum()
 
     // Lower bob
     item->lower().theta = ui->theta2->value();
-    item->lower().omega = ui->theta2->value();
+    item->lower().omega = ui->omega2->value();
     item->lower().m = ui->m2->value();
     item->lower().l = ui->l2->value();
 
