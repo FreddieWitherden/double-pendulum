@@ -33,3 +33,7 @@ mac {
         CONFIG += ppc x86
     }
 }
+
+win32 {
+    RC_FILE = "doublependulum.rc"
+}
