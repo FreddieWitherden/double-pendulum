@@ -25,6 +25,11 @@ HEADERS += src/mainwindow.h \
 FORMS += src/mainwindow.ui
 RESOURCES += resources.qrc
 
+contains(CONFIG, static) {
+    DEFINES += DOUBLEPENDULUM_STATIC
+    QTPLUGIN += qsvg
+}
+
 mac {
     ICON = icon.icns
     TARGET = "Double Pendulum"
