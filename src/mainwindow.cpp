@@ -92,7 +92,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::about()
 {
-    QMessageBox::about(this, tr("About Double Pendulum"), tr("Copyright 2009"));
+    QMessageBox::about(this, trUtf8("About Double Pendulum"), tr("Double pendulum simulator, version 0.1\nCopyright © 2009 Freddie Witherden\nReleased under the GNU GPL 3+"));
 }
 
 DoublePendulumItem *MainWindow::activeItem()
