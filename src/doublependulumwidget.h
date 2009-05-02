@@ -21,6 +21,7 @@
 #define DOUBLEPENDULUMWIDGET_H
 
 #include <QGraphicsView>
+#include <QTime>
 
 class DoublePendulumWidget : public QGraphicsView
 {
@@ -47,6 +48,8 @@ private:
     int m_timerId;
     const int m_timeStep;
     double m_simTime;
+    QTime m_lastUpdate;
+
     bool m_isPaused;
 };
 

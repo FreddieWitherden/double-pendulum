@@ -31,6 +31,9 @@ DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
     setScene(scene);
+
+    // Init the last update time
+    m_lastUpdate.start();
 }
 
 DoublePendulumWidget::~DoublePendulumWidget()
@@ -40,8 +43,9 @@ DoublePendulumWidget::~DoublePendulumWidget()
 
 void DoublePendulumWidget::startSim()
 {
-    // Reset the simulation time
+    // Reset the simulation and actual times
     m_simTime = 0.0;
+    m_lastUpdate.restart();
 
     // Start of all of the pendulums
     foreach (QGraphicsItem *item, scene()->items())
@@ -59,8 +63,19 @@ void DoublePendulumWidget::startSim()
 
 void DoublePendulumWidget::pauseSim()
 {
-    // Invert the current pause status
-    m_isPaused = !m_isPaused;
+    // If we are not paused, pause ourself
+    if (!m_isPaused)
+    {
+        m_isPaused = true;
+    }
+    // If we are paused, unpause ourself
+    else
+    {
+        m_isPaused = false;
+
+        // Reset the last update time
+        m_lastUpdate.restart();
+    }
 }
 
 void DoublePendulumWidget::stopSim()
@@ -103,8 +118,11 @@ void DoublePendulumWidget::timerEvent(QTimerEvent *)
         return;
     }
 
-    // Advance the time forward
-    m_simTime += m_timeStep;
+    // Advance the simulation forward by the amount of time that has passed
+    m_simTime += m_lastUpdate.elapsed();
+
+    // Reset the last update time
+    m_lastUpdate.restart();
 
     // Update the scene
     scene()->advance();
