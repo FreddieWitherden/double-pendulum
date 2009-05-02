@@ -23,7 +23,7 @@
 #include <QGraphicsScene>
 
 DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
-    QGraphicsView(parent), m_scale(10.0), m_timerId(0), m_timeStep(1000 / 60),
+    QGraphicsView(parent), m_scale(10.0),
     m_isPaused(false)
 {
     // Create a scene to store the pendulums
@@ -32,6 +32,10 @@ DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
 
     setScene(scene);
 
+    // Create a timer to update the simulation
+    m_simTimer = new QTimer(this);
+    connect(m_simTimer, SIGNAL(timeout()), this, SLOT(advanceSimulation()));
+
     // Init the last update time
     m_lastUpdate.start();
 }
@@ -39,6 +43,7 @@ DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
 DoublePendulumWidget::~DoublePendulumWidget()
 {
     delete scene();
+    delete m_simTimer;
 }
 
 void DoublePendulumWidget::startSim()
@@ -58,7 +63,7 @@ void DoublePendulumWidget::startSim()
     }
 
     // Start the timer
-    m_timerId = startTimer(m_timeStep);
+    m_simTimer->start();
 }
 
 void DoublePendulumWidget::pauseSim()
@@ -80,8 +85,8 @@ void DoublePendulumWidget::pauseSim()
 
 void DoublePendulumWidget::stopSim()
 {
-    // Stop/kill the timer
-    killTimer(m_timerId);
+    // Stop the timer
+    m_simTimer->stop();
 
     // Stop all of the pendulums
     foreach (QGraphicsItem *item, scene()->items())
@@ -110,7 +115,7 @@ double DoublePendulumWidget::pendulumScaleFactor()
     return m_pScaleFactor;
 }
 
-void DoublePendulumWidget::timerEvent(QTimerEvent *)
+void DoublePendulumWidget::advanceSimulation()
 {
     // Make sure we are not currently paused
     if (m_isPaused)

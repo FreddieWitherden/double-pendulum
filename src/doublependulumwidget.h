@@ -22,9 +22,12 @@
 
 #include <QGraphicsView>
 #include <QTime>
+#include <QTimer>
 
 class DoublePendulumWidget : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     DoublePendulumWidget(QWidget *parent);
     ~DoublePendulumWidget();
@@ -38,15 +41,14 @@ public:
     double pendulumScaleFactor();
 
 protected slots:
-    void timerEvent(QTimerEvent *event);
+    void advanceSimulation();
     void resizeEvent(QResizeEvent *event);
 
 private:
     double m_pScaleFactor;
     double m_scale;
 
-    int m_timerId;
-    const int m_timeStep;
+    QTimer *m_simTimer;
     double m_simTime;
     QTime m_lastUpdate;
 
