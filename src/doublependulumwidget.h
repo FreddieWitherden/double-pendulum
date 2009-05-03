@@ -37,20 +37,29 @@ public:
     void stopSim();
 
     double time();
+    int framesPerSecond();
 
     double pendulumScaleFactor();
 
 protected slots:
     void advanceSimulation();
+    void updateFPS();
     void resizeEvent(QResizeEvent *event);
 
 private:
     double m_pScaleFactor;
     double m_scale;
 
+    const int m_simUpdateFreq;
+    const int m_fpsUpdateFreq;
+
     QTimer *m_simTimer;
+    QTimer *m_fpsTimer;
     double m_simTime;
     QTime m_lastUpdate;
+
+    int m_numFrames;
+    int m_framesPerSecond;
 
     bool m_isPaused;
 };

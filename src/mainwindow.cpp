@@ -31,6 +31,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Create a timer to update the status bar
+    m_statusBarTimer = new QTimer(this);
+    connect(m_statusBarTimer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
+
+    m_statusBarTime = new QLabel("Time: 0.00s");
+    statusBar()->addPermanentWidget(m_statusBarTime);
+
+    m_statusBarFps = new QLabel("FPS: 0");
+    statusBar()->addPermanentWidget(m_statusBarFps);
+
     // Boiler-plate actions
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
@@ -88,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_statusBarTimer;
 }
 
 void MainWindow::about()
@@ -191,6 +202,9 @@ void MainWindow::startSim()
     ui->actionPause->setEnabled(true);
     ui->actionStop->setEnabled(true);
 
+    // Start updating the status bar
+    m_statusBarTimer->start(75);
+
     ui->pendulumView->startSim();
 }
 
@@ -208,6 +222,9 @@ void MainWindow::stopSim()
     // Disable the pause and stop actions
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);
+
+    // Stop the status bar timer
+    m_statusBarTimer->stop();
 
     ui->pendulumView->stopSim();
 }
@@ -260,6 +277,16 @@ void MainWindow::updatePendulumIcon(const QColor& colour)
 
     // Set the icon to be the generated pixmap
     ui->pendulums->setItemIcon(index, QIcon(pm));
+}
+
+void MainWindow::updateStatusBar()
+{
+    QString timeStr;
+    timeStr.setNum(ui->pendulumView->time() / 1000.0, 'f', 2);
+    int fps = ui->pendulumView->framesPerSecond();
+
+    m_statusBarTime->setText(QString("Time: %1s").arg(timeStr));
+    m_statusBarFps->setText(QString("FPS: %1").arg(fps));
 }
 
 void MainWindow::setDefaults()

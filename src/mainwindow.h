@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QLabel>
 
 #include "doublependulumitem.h"
 
@@ -36,11 +38,17 @@ protected slots:
 
     void updatePendulum();
 
+    void updateStatusBar();
+
     void setDefaults();
 
 private:
     Ui::MainWindowClass *ui;
 
+    QLabel *m_statusBarTime;
+    QLabel *m_statusBarFps;
+
+    QTimer *m_statusBarTimer;
     int m_pendulumCount;
     bool m_maskUpdates;
 };

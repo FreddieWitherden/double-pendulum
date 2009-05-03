@@ -23,8 +23,8 @@
 #include <QGraphicsScene>
 
 DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
-    QGraphicsView(parent), m_scale(10.0),
-    m_isPaused(false)
+    QGraphicsView(parent), m_scale(10.0), m_simUpdateFreq(1000 / 100),
+    m_fpsUpdateFreq(1000 / 10), m_isPaused(false)
 {
     // Create a scene to store the pendulums
     QGraphicsScene *scene = new QGraphicsScene(this);
@@ -36,6 +36,10 @@ DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
     m_simTimer = new QTimer(this);
     connect(m_simTimer, SIGNAL(timeout()), this, SLOT(advanceSimulation()));
 
+    // Create a timer to monitor the frame rate of the simulation
+    m_fpsTimer = new QTimer(this);
+    connect(m_fpsTimer, SIGNAL(timeout()), this, SLOT(updateFPS()));
+
     // Init the last update time
     m_lastUpdate.start();
 }
@@ -44,6 +48,7 @@ DoublePendulumWidget::~DoublePendulumWidget()
 {
     delete scene();
     delete m_simTimer;
+    delete m_fpsTimer;
 }
 
 void DoublePendulumWidget::startSim()
@@ -51,6 +56,9 @@ void DoublePendulumWidget::startSim()
     // Reset the simulation and actual times
     m_simTime = 0.0;
     m_lastUpdate.restart();
+
+    // Reset the frame count
+    m_numFrames = 0;
 
     // Start of all of the pendulums
     foreach (QGraphicsItem *item, scene()->items())
@@ -62,8 +70,9 @@ void DoublePendulumWidget::startSim()
         }
     }
 
-    // Start the timer
-    m_simTimer->start();
+    // Start the timers
+    m_simTimer->start(m_simUpdateFreq);
+    m_fpsTimer->start(m_fpsUpdateFreq);
 }
 
 void DoublePendulumWidget::pauseSim()
@@ -72,11 +81,19 @@ void DoublePendulumWidget::pauseSim()
     if (!m_isPaused)
     {
         m_isPaused = true;
+
+        // Stop the timers
+        m_simTimer->stop();
+        m_fpsTimer->stop();
     }
     // If we are paused, unpause ourself
     else
     {
         m_isPaused = false;
+
+        // Restart the timers
+        m_simTimer->start(m_simUpdateFreq);
+        m_fpsTimer->start(m_fpsUpdateFreq);
 
         // Reset the last update time
         m_lastUpdate.restart();
@@ -85,8 +102,9 @@ void DoublePendulumWidget::pauseSim()
 
 void DoublePendulumWidget::stopSim()
 {
-    // Stop the timer
+    // Stop the timers
     m_simTimer->stop();
+    m_fpsTimer->stop();
 
     // Stop all of the pendulums
     foreach (QGraphicsItem *item, scene()->items())
@@ -110,6 +128,11 @@ double DoublePendulumWidget::time()
     return m_simTime;
 }
 
+int DoublePendulumWidget::framesPerSecond()
+{
+    return m_framesPerSecond;
+}
+
 double DoublePendulumWidget::pendulumScaleFactor()
 {
     return m_pScaleFactor;
@@ -117,20 +140,26 @@ double DoublePendulumWidget::pendulumScaleFactor()
 
 void DoublePendulumWidget::advanceSimulation()
 {
-    // Make sure we are not currently paused
-    if (m_isPaused)
-    {
-        return;
-    }
-
     // Advance the simulation forward by the amount of time that has passed
     m_simTime += m_lastUpdate.elapsed();
 
     // Reset the last update time
     m_lastUpdate.restart();
 
+    // Increment the frame count
+    ++m_numFrames;
+
     // Update the scene
     scene()->advance();
+}
+
+void DoublePendulumWidget::updateFPS()
+{
+    // Update the number of frames per second being rendered
+    m_framesPerSecond = m_numFrames * 10;
+
+    // Reset the number of frames
+    m_numFrames = 0;
 }
 
 void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
