@@ -63,7 +63,7 @@
      <x>0</x>
      <y>0</y>
      <width>803</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -109,6 +109,10 @@
    <addaction name="actionStart"/>
    <addaction name="actionPause"/>
    <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionBestFit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_model">
@@ -121,7 +125,7 @@
    <property name="minimumSize">
     <size>
      <width>300</width>
-     <height>0</height>
+     <height>595</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -190,7 +194,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../resources.qrc">
+            <iconset>
              <normaloff>:/icons/resources/list-add.svg</normaloff>:/icons/resources/list-add.svg</iconset>
            </property>
           </widget>
@@ -204,7 +208,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../resources.qrc">
+            <iconset>
              <normaloff>:/icons/resources/list-remove.svg</normaloff>:/icons/resources/list-remove.svg</iconset>
            </property>
           </widget>
@@ -670,7 +674,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-start.svg</normaloff>:/icons/resources/media-playback-start.svg</iconset>
    </property>
    <property name="text">
@@ -682,7 +686,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-pause.svg</normaloff>:/icons/resources/media-playback-pause.svg</iconset>
    </property>
    <property name="text">
@@ -694,7 +698,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-stop.svg</normaloff>:/icons/resources/media-playback-stop.svg</iconset>
    </property>
    <property name="text">
@@ -714,6 +718,42 @@
   <action name="actionPaste">
    <property name="text">
     <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionBestFit">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/resources/zoom-best-fit.svg</normaloff>:/icons/resources/zoom-best-fit.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Best Fit</string>
+   </property>
+   <property name="toolTip">
+    <string>Make the current pendula fit the screen</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/resources/zoom-in.svg</normaloff>:/icons/resources/zoom-in.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="toolTip">
+    <string>Enlarge the pendula</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/resources/zoom-out.svg</normaloff>:/icons/resources/zoom-out.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Shirk the pendula</string>
    </property>
   </action>
  </widget>
@@ -748,8 +788,6 @@
   <tabstop>defaults</tabstop>
   <tabstop>pendulumView</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

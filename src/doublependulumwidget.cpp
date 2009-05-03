@@ -138,6 +138,53 @@ double DoublePendulumWidget::pendulumScaleFactor()
     return m_pScaleFactor;
 }
 
+double DoublePendulumWidget::scaleFactor()
+{
+    return m_scale;
+}
+
+void DoublePendulumWidget::setScaleFactor(double sf)
+{
+    // Update the scale
+    m_scale = sf;
+
+    // Compute the new pendulum scale factor
+    m_pScaleFactor = qMin(sceneRect().width(), sceneRect().height()) / m_scale;
+
+    // Update the scene to force all of the pendula to redraw themselves
+    update();
+}
+
+double DoublePendulumWidget::idealScaleFactor()
+{
+    double largestPendulm = 0;
+
+    // Loop over each pendulum looking for the largest
+    foreach (QGraphicsItem *item, scene()->items())
+    {
+        // If the item is a pendulum
+        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
+        {
+            // Get the bounds of the pendulum
+            QRectF bounds = pendulum->boundingRect();
+
+            // Get its unscale size; height() would also work here
+            double pendulumSize = bounds.width() / pendulumScaleFactor();
+
+            // See if it is the largest thus far
+            if (pendulumSize > largestPendulm)
+            {
+                largestPendulm = pendulumSize;
+            }
+        }
+    }
+
+    // Subtract a bit to account for the bob on the end - magic number alert
+    largestPendulm -= 0.1;
+
+    return largestPendulm;
+}
+
 void DoublePendulumWidget::advanceSimulation()
 {
     // Advance the simulation forward by the amount of time that has passed

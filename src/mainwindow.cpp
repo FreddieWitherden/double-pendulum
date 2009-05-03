@@ -61,6 +61,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionPause, SIGNAL(triggered()), this, SLOT(pauseSim()));
     connect(ui->actionStop, SIGNAL(triggered()), this, SLOT(stopSim()));
 
+    // Zooming the simulation
+    connect(ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
+    connect(ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
+    connect(ui->actionBestFit, SIGNAL(triggered()), this, SLOT(zoomBestFit()));
+
     // Update ODE solving method
     connect(ui->odeSolver, SIGNAL(currentIndexChanged(QString)), this, SLOT(updatePendulum()));
 
@@ -227,6 +232,29 @@ void MainWindow::stopSim()
     m_statusBarTimer->stop();
 
     ui->pendulumView->stopSim();
+}
+
+void MainWindow::zoomIn()
+{
+    double newScale = ui->pendulumView->scaleFactor() / 1.25;
+
+    ui->pendulumView->setScaleFactor(newScale);
+}
+
+void MainWindow::zoomOut()
+{
+    double newScale = ui->pendulumView->scaleFactor() * 1.25;
+
+    ui->pendulumView->setScaleFactor(newScale);
+}
+
+void MainWindow::zoomBestFit()
+{
+    // Get the ideal scaling factor the the view
+    double idealScale = ui->pendulumView->idealScaleFactor();
+
+    // Set this to be the new scaling factor
+    ui->pendulumView->setScaleFactor(idealScale);
 }
 
 void MainWindow::updatePendulum()

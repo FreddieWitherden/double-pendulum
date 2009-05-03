@@ -5,5 +5,8 @@
         <file>resources/media-playback-stop.svg</file>
         <file>resources/list-add.svg</file>
         <file>resources/list-remove.svg</file>
+        <file>resources/zoom-best-fit.svg</file>
+        <file>resources/zoom-in.svg</file>
+        <file>resources/zoom-out.svg</file>
     </qresource>
 </RCC>

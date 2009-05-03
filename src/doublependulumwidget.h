@@ -41,6 +41,10 @@ public:
 
     double pendulumScaleFactor();
 
+    double scaleFactor();
+    void setScaleFactor(double sf);
+    double idealScaleFactor();
+
 protected slots:
     void advanceSimulation();
     void updateFPS();

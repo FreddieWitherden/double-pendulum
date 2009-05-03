@@ -34,6 +34,10 @@ protected slots:
     void pauseSim();
     void stopSim();
 
+    void zoomIn();
+    void zoomOut();
+    void zoomBestFit();
+
     void updatePendulumIcon(const QColor& colour);
 
     void updatePendulum();
