@@ -322,7 +322,7 @@ void MainWindow::setDefaults()
     // Mask update events
     m_maskUpdates = true;
 
-    ui->odeSolver->setCurrentIndex(ui->odeSolver->findText("Euler"));
+    ui->odeSolver->setCurrentIndex(ui->odeSolver->findText("Runge Kutta (RK4)"));
     ui->dt->setValue(0.005);
     ui->g->setValue(9.81);
 
