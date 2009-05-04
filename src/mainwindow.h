@@ -42,6 +42,8 @@ public:
 protected:
     DoublePendulumItem *activeItem();
 
+    void resetStatusBar();
+
 protected slots:
     void about();
 

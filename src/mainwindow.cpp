@@ -35,11 +35,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_statusBarTimer = new QTimer(this);
     connect(m_statusBarTimer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
 
-    m_statusBarTime = new QLabel("Time: 0.00s");
+    // Status bar widgets
+    m_statusBarTime = new QLabel();
     statusBar()->addPermanentWidget(m_statusBarTime);
 
-    m_statusBarFps = new QLabel("FPS: 0");
+    m_statusBarFps = new QLabel();
     statusBar()->addPermanentWidget(m_statusBarFps);
+
+    resetStatusBar();
 
     // Boiler-plate actions
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -117,6 +120,13 @@ DoublePendulumItem *MainWindow::activeItem()
     QVariant v = ui->pendulums->itemData(index);
 
     return v.value<DoublePendulumItem*>();
+}
+
+void MainWindow::resetStatusBar()
+{
+    // Restore the status bar items to their default values
+    m_statusBarTime->setText("Time: 0.00s");
+    m_statusBarFps->setText("FPS: 0");
 }
 
 void MainWindow::addPendulum()
@@ -230,6 +240,9 @@ void MainWindow::stopSim()
 
     // Stop the status bar timer
     m_statusBarTimer->stop();
+
+    // Reset the status bar (time and FPS to 0)
+    resetStatusBar();
 
     ui->pendulumView->stopSim();
 }
