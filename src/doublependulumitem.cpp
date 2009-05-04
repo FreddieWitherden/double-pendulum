@@ -177,7 +177,7 @@ void DoublePendulumItem::paint(QPainter *painter,
     QColor lineColour = Qt::black;
     lineColour.setAlphaF(opacity() / 100.0);
 
-    painter->setPen(QPen(lineColour, 0.04));
+    painter->setPen(QPen(lineColour, 0.04, Qt::SolidLine, Qt::RoundCap));
     painter->drawPolyline(linePoints, 3);
 
     painter->setPen(Qt::NoPen);
