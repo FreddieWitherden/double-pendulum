@@ -19,7 +19,6 @@
 
 #include <QtGui/QApplication>
 #include "mainwindow.h"
-#include "doublependulumrk4.h"
 
 // When doing a static build manually load the SVG module for SVG-icon support
 #ifdef DOUBLEPENDULUM_STATIC
