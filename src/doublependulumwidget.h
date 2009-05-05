@@ -23,7 +23,7 @@
 #include <QGraphicsView>
 #include <QTime>
 #include <QTimer>
-#include <QList>
+#include <QMap>
 
 #include "doublependulumitem.h"
 
@@ -35,8 +35,9 @@ public:
     DoublePendulumWidget(QWidget *parent);
     ~DoublePendulumWidget();
 
-    void addPendulum(DoublePendulumItem *pendulum);
-    void removePendulum(DoublePendulumItem *pendulum);
+    void addPendulum(const QString &name, DoublePendulumItem *pendulum);
+    void removePendulum(const QString &name);
+    QMap<QString, DoublePendulumItem *> pendula();
 
     void startSim();
     void pauseSim();
@@ -73,7 +74,7 @@ private:
 
     bool m_isPaused;
 
-    QList<DoublePendulumItem *> m_pendula;
+    QMap<QString, DoublePendulumItem *> m_pendula;
 };
 
 #endif // DOUBLEPENDULUMWIDGET_H

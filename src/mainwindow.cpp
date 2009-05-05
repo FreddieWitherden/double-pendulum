@@ -119,10 +119,7 @@ void MainWindow::about()
 
 DoublePendulumItem *MainWindow::activeItem()
 {
-    int index = ui->pendulums->currentIndex();
-    QVariant v = ui->pendulums->itemData(index);
-
-    return v.value<DoublePendulumItem*>();
+    return ui->pendulumView->pendula()[ui->pendulums->currentText()];
 }
 
 void MainWindow::resetStatusBar()
@@ -136,16 +133,18 @@ void MainWindow::addPendulum()
 {
     // Create a new pendulum
     DoublePendulumItem *pendulum = new DoublePendulumItem();
-    QVariant v = qVariantFromValue(pendulum);
+
+    // Generate the name of the new pendulum
+    QString name = QString("Pendulum %1").arg(++m_pendulumCount);
 
     // Add the pendulum to the scene
-    ui->pendulumView->addPendulum(pendulum);
+    ui->pendulumView->addPendulum(name, pendulum);
 
     // Add an item in the Pendulum's combo box for the new pendulum
-    ui->pendulums->addItem(QString("Pendulum %1").arg(++m_pendulumCount), v);
+    ui->pendulums->addItem(name);
 
     // Get the index of the newly added item
-    int index = ui->pendulums->findData(v);
+    int index = ui->pendulums->findText(name);
 
     // Make this the selected item
     ui->pendulums->setCurrentIndex(index);
@@ -162,11 +161,13 @@ void MainWindow::addPendulum()
 
 void MainWindow::removePendulum()
 {
+    DoublePendulumItem *active = activeItem();
+
     // Remove the item from the scene
-    ui->pendulumView->removePendulum(activeItem());
+    ui->pendulumView->removePendulum(ui->pendulums->currentText());
 
     // Release the memory associated with item
-    delete activeItem();
+    delete active;
 
     // Remove the item from the combo box
     ui->pendulums->removeItem(ui->pendulums->currentIndex());

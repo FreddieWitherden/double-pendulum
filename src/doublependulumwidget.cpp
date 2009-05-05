@@ -51,20 +51,25 @@ DoublePendulumWidget::~DoublePendulumWidget()
     delete m_fpsTimer;
 }
 
-void DoublePendulumWidget::addPendulum(DoublePendulumItem *pendulum)
+void DoublePendulumWidget::addPendulum(const QString &name, DoublePendulumItem *pendulum)
 {
     scene()->addItem(pendulum);
     pendulum->setPos(0.0, 0.0);
     pendulum->updateScale(m_pScaleFactor);
 
-    m_pendula << pendulum;
+    m_pendula[name] = pendulum;
 }
 
-void DoublePendulumWidget::removePendulum(DoublePendulumItem *pendulum)
+void DoublePendulumWidget::removePendulum(const QString &name)
 {
-    scene()->removeItem(pendulum);
+    scene()->removeItem(m_pendula[name]);
 
-    m_pendula.removeAt(m_pendula.indexOf(pendulum));
+    m_pendula.remove(name);
+}
+
+QMap<QString, DoublePendulumItem *> DoublePendulumWidget::pendula()
+{
+    return m_pendula;
 }
 
 void DoublePendulumWidget::startSim()
