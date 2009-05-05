@@ -77,6 +77,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionWebPage"/>
    </widget>
    <widget class="QMenu" name="menuSimulation">
     <property name="title">
@@ -754,6 +755,14 @@
    </property>
    <property name="toolTip">
     <string>Shirk the pendula</string>
+   </property>
+  </action>
+  <action name="actionWebPage">
+   <property name="text">
+    <string>Main web page</string>
+   </property>
+   <property name="toolTip">
+    <string>Main web page</string>
    </property>
   </action>
  </widget>

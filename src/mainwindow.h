@@ -46,6 +46,7 @@ protected:
 
 protected slots:
     void about();
+    void webPage();
 
     void addPendulum();
     void removePendulum();

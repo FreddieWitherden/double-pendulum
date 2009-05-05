@@ -22,6 +22,8 @@
 
 #include <QPixmap>
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include <QDebug>
 
@@ -47,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Boiler-plate actions
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    connect(ui->actionWebPage, SIGNAL(triggered()), this, SLOT(webPage()));
 
     // Showing/hiding the settings dock
     ui->menuView->addAction(ui->dockWidget_model->toggleViewAction());
@@ -115,6 +118,11 @@ void MainWindow::about()
                        tr("Double pendulum simulator, version 0.2\n"
                           "Copyright © 2009 Freddie Witherden\n"
                           "Released under the GNU GPL 3+"));
+}
+
+void MainWindow::webPage()
+{
+    QDesktopServices::openUrl(QUrl("http://freddie.witherden.org/tools/doublependulum/"));
 }
 
 DoublePendulumItem *MainWindow::activeItem()
