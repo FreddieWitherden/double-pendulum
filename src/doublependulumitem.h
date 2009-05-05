@@ -27,12 +27,10 @@
 #include "doublependulumeuler.h"
 #include "doublependulumrk4.h"
 
-#include "doublependulumwidget.h"
-
 class DoublePendulumItem : public QGraphicsItem
 {
 public:
-    DoublePendulumItem(DoublePendulumWidget *pendulumWidget);
+    DoublePendulumItem();
     ~DoublePendulumItem();
 
     void start();
@@ -66,7 +64,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
-    virtual void advance(int phase);
+    void updateScale(double newScale);
+    void updateTime(double newTime);
 
     enum
     {
@@ -74,13 +73,13 @@ public:
     };
 
 private:
-    DoublePendulumWidget *m_pendulumView;
-
     DoublePendulum *m_pendulum;
 
     QString m_solver;
     double m_dt;
     double m_g;
+
+    double m_scale;
 
     /**
      * Initial states of the upper and lower pendulums.

@@ -23,6 +23,9 @@
 #include <QGraphicsView>
 #include <QTime>
 #include <QTimer>
+#include <QList>
+
+#include "doublependulumitem.h"
 
 class DoublePendulumWidget : public QGraphicsView
 {
@@ -31,6 +34,9 @@ class DoublePendulumWidget : public QGraphicsView
 public:
     DoublePendulumWidget(QWidget *parent);
     ~DoublePendulumWidget();
+
+    void addPendulum(DoublePendulumItem *pendulum);
+    void removePendulum(DoublePendulumItem *pendulum);
 
     void startSim();
     void pauseSim();
@@ -66,6 +72,8 @@ private:
     int m_framesPerSecond;
 
     bool m_isPaused;
+
+    QList<DoublePendulumItem *> m_pendula;
 };
 
 #endif // DOUBLEPENDULUMWIDGET_H

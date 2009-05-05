@@ -135,12 +135,11 @@ void MainWindow::resetStatusBar()
 void MainWindow::addPendulum()
 {
     // Create a new pendulum
-    DoublePendulumItem *pendulum = new DoublePendulumItem(ui->pendulumView);
+    DoublePendulumItem *pendulum = new DoublePendulumItem();
     QVariant v = qVariantFromValue(pendulum);
 
     // Add the pendulum to the scene
-    ui->pendulumView->scene()->addItem(pendulum);
-    pendulum->setPos(0.0, 0.0);
+    ui->pendulumView->addPendulum(pendulum);
 
     // Add an item in the Pendulum's combo box for the new pendulum
     ui->pendulums->addItem(QString("Pendulum %1").arg(++m_pendulumCount), v);
@@ -164,7 +163,7 @@ void MainWindow::addPendulum()
 void MainWindow::removePendulum()
 {
     // Remove the item from the scene
-    ui->pendulumView->scene()->removeItem(activeItem());
+    ui->pendulumView->removePendulum(activeItem());
 
     // Release the memory associated with item
     delete activeItem();
