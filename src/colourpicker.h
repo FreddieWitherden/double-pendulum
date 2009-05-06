@@ -39,7 +39,7 @@ protected slots:
     void selfClicked();
 
 protected:
-    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
     QColor m_colour;
 };

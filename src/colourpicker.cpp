@@ -20,7 +20,6 @@
 #include "colourpicker.h"
 
 #include <QMouseEvent>
-#include <QResizeEvent>
 
 #include <QPixmap>
 #include <QPainter>
@@ -30,6 +29,9 @@ ColourPicker::ColourPicker(QWidget *parent)
     : QToolButton(parent)
 {
     setColour(Qt::blue);
+
+    setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
+
     connect(this, SIGNAL(clicked()), this, SLOT(selfClicked()));
 }
 
@@ -42,22 +44,23 @@ void ColourPicker::setColour(const QColor& colour)
 {
     m_colour = colour;
 
-    // Create a pixmap to use as our 'icon'
-    QPixmap pix(iconSize());
-    QPainter painter(&pix);
-
-    // Paint the colour to a rectangle
-    painter.setBrush(colour);
-    painter.setPen(Qt::gray);
-    painter.drawRect(pix.rect().adjusted(0, 0, -1, -1));
-
-    // Set the pixmap as the buttons icon
-    setIcon(QIcon(pix));
+    // Request a redraw
+    update();
 }
 
-void ColourPicker::resizeEvent(QResizeEvent *)
+void ColourPicker::paintEvent(QPaintEvent *event)
 {
-    setColour(m_colour);
+    QToolButton::paintEvent(event);
+
+    QPainter p(this);
+
+    // Compute the dimensions of the rectangle to paint to
+    const int corr = 5;
+    QRect r = rect().adjusted(corr, corr, -corr - 1, -corr - 1);
+
+    p.setBrush(m_colour);
+    p.setPen(Qt::lightGray);
+    p.drawRect(r);
 }
 
 void ColourPicker::selfClicked()
