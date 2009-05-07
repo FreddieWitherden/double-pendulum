@@ -51,6 +51,27 @@ DoublePendulumWidget::~DoublePendulumWidget()
     delete m_fpsTimer;
 }
 
+void DoublePendulumWidget::addPendulum(const QString &name, DoublePendulumItem *pendulum)
+{
+    scene()->addItem(pendulum);
+    pendulum->setPos(0.0, 0.0);
+    pendulum->updateScale(m_pScaleFactor);
+
+    m_pendula[name] = pendulum;
+}
+
+void DoublePendulumWidget::removePendulum(const QString &name)
+{
+    scene()->removeItem(m_pendula[name]);
+
+    m_pendula.remove(name);
+}
+
+QMap<QString, DoublePendulumItem *> DoublePendulumWidget::pendula()
+{
+    return m_pendula;
+}
+
 void DoublePendulumWidget::startSim()
 {
     // Reset the simulation and actual times
@@ -61,13 +82,9 @@ void DoublePendulumWidget::startSim()
     m_numFrames = 0;
 
     // Start of all of the pendulums
-    foreach (QGraphicsItem *item, scene()->items())
+    foreach (DoublePendulumItem *pendulum, m_pendula)
     {
-        // If the item is a pendulum
-        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
-        {
-            pendulum->start();
-        }
+        pendulum->start();
     }
 
     // Start the timers
@@ -107,13 +124,9 @@ void DoublePendulumWidget::stopSim()
     m_fpsTimer->stop();
 
     // Stop all of the pendulums
-    foreach (QGraphicsItem *item, scene()->items())
+    foreach (DoublePendulumItem *pendulum, m_pendula)
     {
-        // If the item is a pendulum
-        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
-        {
-            pendulum->stop();
-        }
+        pendulum->stop();
     }
 
     // We are not paused
@@ -151,6 +164,11 @@ void DoublePendulumWidget::setScaleFactor(double sf)
     // Compute the new pendulum scale factor
     m_pScaleFactor = qMin(sceneRect().width(), sceneRect().height()) / m_scale;
 
+    foreach (DoublePendulumItem *pendulum, m_pendula)
+    {
+        pendulum->updateScale(m_pScaleFactor);
+    }
+
     // Update the scene to force all of the pendula to redraw themselves
     update();
 }
@@ -160,22 +178,18 @@ double DoublePendulumWidget::idealScaleFactor()
     double largestPendulm = 0;
 
     // Loop over each pendulum looking for the largest
-    foreach (QGraphicsItem *item, scene()->items())
+    foreach (DoublePendulumItem *pendulum, m_pendula)
     {
-        // If the item is a pendulum
-        if (DoublePendulumItem *pendulum = qgraphicsitem_cast<DoublePendulumItem *>(item))
+        // Get the bounds of the pendulum
+        QRectF bounds = pendulum->boundingRect();
+
+        // Get its unscale size; height() would also work here
+        double pendulumSize = bounds.width() / pendulumScaleFactor();
+
+        // See if it is the largest thus far
+        if (pendulumSize > largestPendulm)
         {
-            // Get the bounds of the pendulum
-            QRectF bounds = pendulum->boundingRect();
-
-            // Get its unscale size; height() would also work here
-            double pendulumSize = bounds.width() / pendulumScaleFactor();
-
-            // See if it is the largest thus far
-            if (pendulumSize > largestPendulm)
-            {
-                largestPendulm = pendulumSize;
-            }
+            largestPendulm = pendulumSize;
         }
     }
 
@@ -197,7 +211,10 @@ void DoublePendulumWidget::advanceSimulation()
     ++m_numFrames;
 
     // Update the scene
-    scene()->advance();
+    foreach (DoublePendulumItem *pendulum, m_pendula)
+    {
+        pendulum->updateTime(m_simTime);
+    }
 }
 
 void DoublePendulumWidget::updateFPS()
@@ -219,6 +236,11 @@ void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
 
     // Ensure the range of the smaller axis is between 0..m_scale
     m_pScaleFactor = qMin(newSceneRect.width(), newSceneRect.height()) / m_scale;
+
+    foreach (DoublePendulumItem *pendulum, m_pendula)
+    {
+        pendulum->updateScale(m_pScaleFactor);
+    }
 
     // Update the scene rect
     setSceneRect(newSceneRect);

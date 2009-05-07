@@ -20,11 +20,12 @@
 #include "doublependulumitem.h"
 
 #include <QtDebug>
+#include <QPainter>
 
 #include <cmath>
 
-DoublePendulumItem::DoublePendulumItem(DoublePendulumWidget *pendulumWidget)
-    : m_pendulumView(pendulumWidget), m_pendulum(0)
+DoublePendulumItem::DoublePendulumItem()
+    : m_pendulum(0)
 {
 }
 
@@ -134,7 +135,7 @@ QRectF DoublePendulumItem::boundingRect() const
     else
     {
         const double max = (m_pendulum->l1() + m_pendulum->l2() + 0.2)
-                          * m_pendulumView->pendulumScaleFactor();
+                          * m_scale;
 
         return QRectF(QPointF(-max, -max), QPointF(max, max));
     }
@@ -155,8 +156,7 @@ void DoublePendulumItem::paint(QPainter *painter,
         return;
     }
 
-    const double sf = m_pendulumView->pendulumScaleFactor();
-    painter->scale(sf, sf);
+    painter->scale(m_scale, m_scale);
 
     // Location of the upper bob
     QPointF upperBob(m_pendulum->l1() * sin(m_pendulum->theta1()),
@@ -197,10 +197,18 @@ void DoublePendulumItem::paint(QPainter *painter,
     painter->drawEllipse(lowerBob, 0.2, 0.2);
 }
 
-void DoublePendulumItem::advance(int)
+void DoublePendulumItem::updateScale(double newScale)
+{
+    m_scale = newScale;
+
+    // Recompute our bounding box
+    prepareGeometryChange();
+}
+
+void DoublePendulumItem::updateTime(double newTime)
 {
     // Actual time (s as opposed to ms)
-    double actualTime = m_pendulumView->time() / 1000.0;
+    double actualTime = newTime / 1000.0;
 
     // Update the pendulum
     if (actualTime > m_pendulum->time())
