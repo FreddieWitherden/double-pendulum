@@ -99,7 +99,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->opacity, SIGNAL(valueChanged(int)), this, SLOT(updatePendulum()));
 
     // Update the combo box icon when the pendulum colour changes
-    connect(ui->upperColour, SIGNAL(colourChanged(QColor)), this, SLOT(updatePendulumIcon(QColor)));
+    connect(ui->upperColour, SIGNAL(colourChanged(QColor)), this, SLOT(updatePendulumIcon()));
+    connect(ui->lowerColour, SIGNAL(colourChanged(QColor)), this, SLOT(updatePendulumIcon()));
 
     // Defaults button
     connect(ui->defaults, SIGNAL(clicked()), this, SLOT(setDefaults()));
@@ -328,15 +329,26 @@ void MainWindow::updatePendulum()
     item->setOpacity(ui->opacity->value());
 }
 
-void MainWindow::updatePendulumIcon(const QColor& colour)
+void MainWindow::updatePendulumIcon()
 {
     int index = ui->pendulums->currentIndex();
 
     QPixmap pm(ui->pendulums->iconSize());
     QPainter painter(&pm);
 
+    QPolygon triangle;
+    triangle << QPoint(0, 0) << QPoint(0, pm.height()) << QPoint(pm.width(), 0);
+
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(activeItem()->upperColour());
+    painter.drawPolygon(triangle);
+
+    triangle[0] = QPoint(pm.width(), pm.height());
+    painter.setBrush(activeItem()->lowerColour());
+    painter.drawPolygon(triangle);
+
     painter.setPen(Qt::gray);
-    painter.setBrush(colour);
+    painter.setBrush(Qt::NoBrush);
     painter.drawRect(pm.rect().adjusted(0, 0, -1, -1));
 
     // Set the icon to be the generated pixmap
@@ -381,5 +393,5 @@ void MainWindow::setDefaults()
     updatePendulum();
 
     // Update the pendulum's icon
-    updatePendulumIcon(ui->upperColour->colour());
+    updatePendulumIcon();
 }
