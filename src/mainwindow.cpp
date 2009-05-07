@@ -39,9 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Status bar widgets
     m_statusBarTime = new QLabel();
+    m_statusBarTime->setMinimumWidth(m_statusBarTime->fontMetrics().width("Time: 000.00s"));
     statusBar()->addPermanentWidget(m_statusBarTime);
 
     m_statusBarFps = new QLabel();
+    m_statusBarFps->setMinimumWidth(m_statusBarTime->fontMetrics().width("FPS: 000"));
     statusBar()->addPermanentWidget(m_statusBarFps);
 
     resetStatusBar();
