@@ -60,7 +60,7 @@ protected slots:
     void zoomOut();
     void zoomBestFit();
 
-    void updatePendulumIcon(const QColor& colour);
+    void updatePendulumIcon();
 
     void updatePendulum();
 
