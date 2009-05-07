@@ -200,6 +200,9 @@ void DoublePendulumItem::paint(QPainter *painter,
 void DoublePendulumItem::updateScale(double newScale)
 {
     m_scale = newScale;
+
+    // Recompute our bounding box
+    prepareGeometryChange();
 }
 
 void DoublePendulumItem::updateTime(double newTime)
