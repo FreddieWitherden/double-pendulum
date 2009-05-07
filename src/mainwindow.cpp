@@ -116,10 +116,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::about()
 {
-    QMessageBox::about(this, trUtf8("About Double Pendulum"),
-                       tr("Double pendulum simulator, version 0.2\n"
-                          "Copyright © 2009 Freddie Witherden\n"
-                          "Released under the GNU GPL 3+"));
+    QMessageBox box(this);
+
+    box.setText(QString("<center>"
+                          "<img src=\":/icons/resources/icon-128.png\">"
+                          "<h3>%1</h3>"
+                          "<p>Version %2</p>"
+                        "</center>"
+                        "<p>Copyright © 2009 Freddie Witherden</p>")
+                .arg(tr("Double Pendulum Simulator"))
+                .arg(DOUBLEPENDULUM_VERSION));
+    box.setWindowTitle("Double Pendulum Simulator");
+    box.setIcon(QMessageBox::NoIcon);
+
+    box.exec();
 }
 
 void MainWindow::webPage()

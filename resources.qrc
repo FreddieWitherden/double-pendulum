@@ -8,5 +8,6 @@
         <file>resources/zoom-best-fit.svg</file>
         <file>resources/zoom-in.svg</file>
         <file>resources/zoom-out.svg</file>
+        <file>resources/icon-128.png</file>
     </qresource>
 </RCC>
