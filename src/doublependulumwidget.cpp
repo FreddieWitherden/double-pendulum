@@ -24,7 +24,7 @@
 
 DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
     QGraphicsView(parent), m_scale(10.0), m_simUpdateFreq(1000 / 100),
-    m_fpsUpdateFreq(1000 / 10), m_isPaused(false)
+    m_fpsUpdateFreq(1000 / 10), m_framesPerSecond(0), m_isPaused(false)
 {
     // Create a scene to store the pendulums
     QGraphicsScene *scene = new QGraphicsScene(this);
