@@ -38,9 +38,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background: transparent;</string>
-      </property>
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
@@ -195,7 +192,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../resources.qrc">
              <normaloff>:/icons/resources/list-add.svg</normaloff>:/icons/resources/list-add.svg</iconset>
            </property>
           </widget>
@@ -209,7 +206,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../resources.qrc">
              <normaloff>:/icons/resources/list-remove.svg</normaloff>:/icons/resources/list-remove.svg</iconset>
            </property>
           </widget>
@@ -675,7 +672,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-start.svg</normaloff>:/icons/resources/media-playback-start.svg</iconset>
    </property>
    <property name="text">
@@ -687,7 +684,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-pause.svg</normaloff>:/icons/resources/media-playback-pause.svg</iconset>
    </property>
    <property name="text">
@@ -699,7 +696,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-stop.svg</normaloff>:/icons/resources/media-playback-stop.svg</iconset>
    </property>
    <property name="text">
@@ -723,7 +720,7 @@
   </action>
   <action name="actionBestFit">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-best-fit.svg</normaloff>:/icons/resources/zoom-best-fit.svg</iconset>
    </property>
    <property name="text">
@@ -735,7 +732,7 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-in.svg</normaloff>:/icons/resources/zoom-in.svg</iconset>
    </property>
    <property name="text">
@@ -747,7 +744,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-out.svg</normaloff>:/icons/resources/zoom-out.svg</iconset>
    </property>
    <property name="text">
@@ -797,6 +794,8 @@
   <tabstop>defaults</tabstop>
   <tabstop>pendulumView</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
