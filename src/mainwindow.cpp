@@ -29,7 +29,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass),
-      m_pendulumCount(0), m_maskUpdates(false)
+      m_pendulumCount(0), m_maskUpdates(false), m_opengl(false)
 {
     ui->setupUi(this);
 
@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
     statusBar()->addPermanentWidget(m_statusBarFps);
 
     resetStatusBar();
+
+    connect(ui->actionUseOpenGL, SIGNAL(toggled(bool)), this, SLOT(useOpenGL(bool)));
 
     // Boiler-plate actions
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -292,6 +294,22 @@ void MainWindow::zoomBestFit()
 
     // Set this to be the new scaling factor
     ui->pendulumView->setScaleFactor(idealScale);
+}
+
+void MainWindow::useOpenGL(bool on)
+{
+    if (on)
+    {
+        QGLFormat fmt;
+        fmt.setSwapInterval(1);
+        fmt.setSampleBuffers(true);
+
+        ui->pendulumView->setViewport(new QGLWidget(fmt));
+    }
+    else
+    {
+        ui->pendulumView->setViewport(0);
+    }
 }
 
 void MainWindow::updatePendulum()

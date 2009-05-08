@@ -88,6 +88,7 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionUseOpenGL"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -192,7 +193,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../resources.qrc">
+            <iconset>
              <normaloff>:/icons/resources/list-add.svg</normaloff>:/icons/resources/list-add.svg</iconset>
            </property>
           </widget>
@@ -206,7 +207,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../resources.qrc">
+            <iconset>
              <normaloff>:/icons/resources/list-remove.svg</normaloff>:/icons/resources/list-remove.svg</iconset>
            </property>
           </widget>
@@ -672,7 +673,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-start.svg</normaloff>:/icons/resources/media-playback-start.svg</iconset>
    </property>
    <property name="text">
@@ -684,7 +685,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-pause.svg</normaloff>:/icons/resources/media-playback-pause.svg</iconset>
    </property>
    <property name="text">
@@ -696,7 +697,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/media-playback-stop.svg</normaloff>:/icons/resources/media-playback-stop.svg</iconset>
    </property>
    <property name="text">
@@ -720,7 +721,7 @@
   </action>
   <action name="actionBestFit">
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/zoom-best-fit.svg</normaloff>:/icons/resources/zoom-best-fit.svg</iconset>
    </property>
    <property name="text">
@@ -732,7 +733,7 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/zoom-in.svg</normaloff>:/icons/resources/zoom-in.svg</iconset>
    </property>
    <property name="text">
@@ -744,7 +745,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset resource="../resources.qrc">
+    <iconset>
      <normaloff>:/icons/resources/zoom-out.svg</normaloff>:/icons/resources/zoom-out.svg</iconset>
    </property>
    <property name="text">
@@ -760,6 +761,17 @@
    </property>
    <property name="toolTip">
     <string>Main web page</string>
+   </property>
+  </action>
+  <action name="actionUseOpenGL">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use OpenGL</string>
+   </property>
+   <property name="toolTip">
+    <string>Use OpenGL for rendering</string>
    </property>
   </action>
  </widget>
@@ -794,8 +806,6 @@
   <tabstop>defaults</tabstop>
   <tabstop>pendulumView</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

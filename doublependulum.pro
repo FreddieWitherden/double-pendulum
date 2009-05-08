@@ -3,7 +3,7 @@
 # -------------------------------------------------
 TARGET = doublependulum
 TEMPLATE = app
-QT += svg
+QT += svg opengl
 DEPENDPATH += . \
     src
 INCLUDEPATH += src
