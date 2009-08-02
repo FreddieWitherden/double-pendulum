@@ -383,6 +383,15 @@ void MainWindow::updateStatusBar()
     m_statusBarFps->setText(QString("FPS: %1").arg(fps));
 }
 
+QPair<QColor, QColor> MainWindow::randBobColour()
+{
+    const int hue1 = qrand() % 255;
+    const int hue2 = (hue1 + 75) % 255;
+
+    return qMakePair(QColor::fromHsv(hue1, 255, 255),
+                     QColor::fromHsv(hue2, 255, 255));
+}
+
 void MainWindow::setDefaults()
 {
     // Mask update events
@@ -402,8 +411,10 @@ void MainWindow::setDefaults()
     ui->m2->setValue(0.3);
     ui->l2->setValue(0.6);
 
-    ui->upperColour->setColour(Qt::red);
-    ui->lowerColour->setColour(Qt::blue);
+    const QPair<QColor, QColor> bobColours = MainWindow::randBobColour();
+
+    ui->upperColour->setColour(bobColours.first);
+    ui->lowerColour->setColour(bobColours.second);
     ui->opacity->setValue(100);
 
     // Unmask update events and force an update

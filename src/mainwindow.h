@@ -24,6 +24,8 @@
 #include <QTimer>
 #include <QLabel>
 #include <QGLWidget>
+#include <QPair>
+#include <QColor>
 
 #include "doublependulumitem.h"
 
@@ -44,6 +46,8 @@ protected:
     DoublePendulumItem *activeItem();
 
     void resetStatusBar();
+
+    static QPair<QColor, QColor> randBobColour();
 
 protected slots:
     void about();
