@@ -156,8 +156,6 @@ void DoublePendulumItem::paint(QPainter *painter,
         return;
     }
 
-    painter->scale(m_scale, m_scale);
-
     // Location of the upper bob
     QPointF upperBob(m_pendulum->l1() * sin(m_pendulum->theta1()),
                      m_pendulum->l1() * cos(m_pendulum->theta1()));
@@ -165,6 +163,10 @@ void DoublePendulumItem::paint(QPainter *painter,
     // Location of the power bob
     QPointF lowerBob(upperBob.x() + m_pendulum->l2() * sin(m_pendulum->theta2()),
                      upperBob.y() + m_pendulum->l2() * cos(m_pendulum->theta2()));
+
+    // Scale the upper and lower bobs
+    upperBob *= m_scale;
+    lowerBob *= m_scale;
 
     QPointF linePoints[] =
     {
@@ -177,7 +179,7 @@ void DoublePendulumItem::paint(QPainter *painter,
     QColor lineColour = Qt::black;
     lineColour.setAlphaF(opacity() / 100.0);
 
-    painter->setPen(QPen(lineColour, 0.04, Qt::SolidLine, Qt::RoundCap));
+    painter->setPen(QPen(lineColour, 0.04 * m_scale, Qt::SolidLine, Qt::RoundCap));
     painter->drawPolyline(linePoints, 3);
 
     painter->setPen(Qt::NoPen);
@@ -187,14 +189,14 @@ void DoublePendulumItem::paint(QPainter *painter,
     actualUpperColour.setAlphaF(m_opacity / 100.0);
 
     painter->setBrush(QBrush(actualUpperColour));
-    painter->drawEllipse(upperBob, 0.2, 0.2);
+    painter->drawEllipse(upperBob, 0.2 * m_scale, 0.2 * m_scale);
 
     // Finally the lower bob
     QColor actualLowerColour = m_lowerColour;
     actualLowerColour.setAlphaF(m_opacity / 100.0);
 
     painter->setBrush(QBrush(actualLowerColour));
-    painter->drawEllipse(lowerBob, 0.2, 0.2);
+    painter->drawEllipse(lowerBob, 0.2 * m_scale, 0.2 * m_scale);
 }
 
 void DoublePendulumItem::updateScale(double newScale)

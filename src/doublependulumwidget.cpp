@@ -133,7 +133,7 @@ void DoublePendulumWidget::stopSim()
     m_isPaused = false;
 
     // Request a repaint to clear ourself
-    update();
+    scene()->update();
 }
 
 double DoublePendulumWidget::time()

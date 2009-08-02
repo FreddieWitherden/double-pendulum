@@ -23,6 +23,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QLabel>
+#include <QGLWidget>
 
 #include "doublependulumitem.h"
 
@@ -60,6 +61,8 @@ protected slots:
     void zoomOut();
     void zoomBestFit();
 
+    void useOpenGL(bool on);
+
     void updatePendulumIcon();
 
     void updatePendulum();
@@ -77,6 +80,8 @@ private:
     QTimer *m_statusBarTimer;
     int m_pendulumCount;
     bool m_maskUpdates;
+
+    bool m_opengl;
 };
 
 #endif // MAINWINDOW_H
