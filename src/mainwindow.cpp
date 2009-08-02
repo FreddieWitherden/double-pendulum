@@ -29,7 +29,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass),
-      m_pendulumCount(0), m_maskUpdates(false), m_opengl(false)
+      m_pendulumCount(0), m_maskUpdates(false)
 {
     ui->setupUi(this);
 

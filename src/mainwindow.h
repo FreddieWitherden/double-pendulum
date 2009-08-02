@@ -80,8 +80,6 @@ private:
     QTimer *m_statusBarTimer;
     int m_pendulumCount;
     bool m_maskUpdates;
-
-    bool m_opengl;
 };
 
 #endif // MAINWINDOW_H
