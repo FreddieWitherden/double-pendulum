@@ -25,7 +25,7 @@ HEADERS += src/mainwindow.h \
 FORMS += src/mainwindow.ui
 RESOURCES += resources.qrc
 
-DEFINES += DOUBLEPENDULUM_VERSION="0.2"
+DEFINES += DOUBLEPENDULUM_VERSION="0.3"
 
 contains(CONFIG, static) {
     DEFINES += DOUBLEPENDULUM_STATIC
