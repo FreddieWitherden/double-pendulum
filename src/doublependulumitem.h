@@ -59,18 +59,11 @@ public:
 
     QRectF boundingRect() const;
 
-    int type() const;
-
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
     void updateScale(double newScale);
     void updateTime(double newTime);
-
-    enum
-    {
-        Type = UserType + 1
-    };
 
 private:
     DoublePendulum *m_pendulum;
@@ -90,7 +83,5 @@ private:
     QColor m_lowerColour;
     int m_opacity;
 };
-
-Q_DECLARE_METATYPE(DoublePendulumItem*);
 
 #endif // DOUBLEPENDULUMITEM_H

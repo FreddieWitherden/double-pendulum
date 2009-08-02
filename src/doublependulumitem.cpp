@@ -141,11 +141,6 @@ QRectF DoublePendulumItem::boundingRect() const
     }
 }
 
-int DoublePendulumItem::type() const
-{
-    return Type;
-}
-
 void DoublePendulumItem::paint(QPainter *painter,
                                const QStyleOptionGraphicsItem *,
                                QWidget *)
