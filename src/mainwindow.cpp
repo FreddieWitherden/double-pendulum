@@ -20,6 +20,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <cmath>
+
 #include <QPixmap>
 #include <QMessageBox>
 #include <QDesktopServices>
@@ -395,11 +397,11 @@ void MainWindow::updateStatusBar()
 
 QPair<QColor, QColor> MainWindow::randBobColour()
 {
-    const int hue1 = qrand() % 255;
-    const int hue2 = (hue1 + 75) % 255;
+    const double hue1 = qrand() * (1.0 / RAND_MAX);
+    const double hue2 = fmod(hue1 + 0.3, 1.0);
 
-    return qMakePair(QColor::fromHsv(hue1, 255, 255),
-                     QColor::fromHsv(hue2, 255, 255));
+    return qMakePair(QColor::fromHsvF(hue1, 1.0, 1.0),
+                     QColor::fromHsvF(hue2, 1.0, 1.0));
 }
 
 void MainWindow::setDefaults()
