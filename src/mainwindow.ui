@@ -60,7 +60,7 @@
      <x>0</x>
      <y>0</y>
      <width>803</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -193,7 +193,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../resources.qrc">
              <normaloff>:/icons/resources/list-add.svg</normaloff>:/icons/resources/list-add.svg</iconset>
            </property>
           </widget>
@@ -207,7 +207,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../resources.qrc">
              <normaloff>:/icons/resources/list-remove.svg</normaloff>:/icons/resources/list-remove.svg</iconset>
            </property>
           </widget>
@@ -673,7 +673,7 @@
   </action>
   <action name="actionStart">
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-start.svg</normaloff>:/icons/resources/media-playback-start.svg</iconset>
    </property>
    <property name="text">
@@ -685,7 +685,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-pause.svg</normaloff>:/icons/resources/media-playback-pause.svg</iconset>
    </property>
    <property name="text">
@@ -697,7 +697,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/media-playback-stop.svg</normaloff>:/icons/resources/media-playback-stop.svg</iconset>
    </property>
    <property name="text">
@@ -720,8 +720,11 @@
    </property>
   </action>
   <action name="actionBestFit">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-best-fit.svg</normaloff>:/icons/resources/zoom-best-fit.svg</iconset>
    </property>
    <property name="text">
@@ -732,8 +735,11 @@
    </property>
   </action>
   <action name="actionZoomIn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-in.svg</normaloff>:/icons/resources/zoom-in.svg</iconset>
    </property>
    <property name="text">
@@ -744,8 +750,11 @@
    </property>
   </action>
   <action name="actionZoomOut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/resources/zoom-out.svg</normaloff>:/icons/resources/zoom-out.svg</iconset>
    </property>
    <property name="text">
@@ -806,6 +815,8 @@
   <tabstop>defaults</tabstop>
   <tabstop>pendulumView</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

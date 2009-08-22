@@ -186,15 +186,11 @@ double DoublePendulumWidget::idealScaleFactor()
         // Get its unscale size; height() would also work here
         double pendulumSize = bounds.width() / pendulumScaleFactor();
 
-        // See if it is the largest thus far
-        if (pendulumSize > largestPendulm)
-        {
-            largestPendulm = pendulumSize;
-        }
+        largestPendulm = qMax(pendulumSize, largestPendulm);
     }
 
     // Subtract a bit to account for the bob on the end - magic number alert
-    largestPendulm -= 0.1;
+    largestPendulm -= 0.2;
 
     return largestPendulm;
 }

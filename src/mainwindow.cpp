@@ -243,6 +243,11 @@ void MainWindow::startSim()
     ui->actionPause->setEnabled(true);
     ui->actionStop->setEnabled(true);
 
+    // Enable the zoom controls
+    ui->actionZoomIn->setEnabled(true);
+    ui->actionZoomOut->setEnabled(true);
+    ui->actionBestFit->setEnabled(true);
+
     // Start updating the status bar
     m_statusBarTimer->start(75);
 
@@ -263,6 +268,11 @@ void MainWindow::stopSim()
     // Disable the pause and stop actions
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);
+
+    // Disable the zoom controls
+    ui->actionZoomIn->setEnabled(false);
+    ui->actionZoomOut->setEnabled(false);
+    ui->actionBestFit->setEnabled(false);
 
     // Stop the status bar timer
     m_statusBarTimer->stop();
