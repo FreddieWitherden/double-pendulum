@@ -151,47 +151,49 @@ void DoublePendulumItem::paint(QPainter *painter,
         return;
     }
 
-    // Location of the upper bob
-    QPointF upperBob(m_pendulum->l1() * sin(m_pendulum->theta1()),
-                     m_pendulum->l1() * cos(m_pendulum->theta1()));
+    // Various drawing sizes
+    const double bobSize = 0.2 * m_scale;
+    const double lineSize = 0.04 * m_scale;
 
-    // Location of the power bob
-    QPointF lowerBob(upperBob.x() + m_pendulum->l2() * sin(m_pendulum->theta2()),
-                     upperBob.y() + m_pendulum->l2() * cos(m_pendulum->theta2()));
+    // Scaled location of the upper bob
+    const QPointF upperBob = QPointF(m_pendulum->l1() * sin(m_pendulum->theta1()),
+                                     m_pendulum->l1() * cos(m_pendulum->theta1()))
+                           * m_scale;
 
-    // Scale the upper and lower bobs
-    upperBob *= m_scale;
-    lowerBob *= m_scale;
+    // Scaled location of the lower bob
+    const QPointF lowerBob = QPointF(m_pendulum->l2() * sin(m_pendulum->theta2()),
+                                     m_pendulum->l2() * cos(m_pendulum->theta2()))
+                           * m_scale + upperBob;
 
-    QPointF linePoints[] =
-    {
-        QPointF(0.0, 0.0),
-        upperBob,
-        lowerBob
-    };
+    // Amount of material to omit from the end of the first connecting line
+    const QPointF upperCut = QPointF(sin(m_pendulum->theta1()),
+                                     cos(m_pendulum->theta1())) * bobSize;
+
+    // Amount of material to omit from both ends of the second line
+    const QPointF lowerCut = QPointF(sin(m_pendulum->theta2()),
+                                     cos(m_pendulum->theta2())) * bobSize;
+
+    painter->setOpacity(m_opacity / 100.0);
 
     // First come the connecting lines
-    QColor lineColour = Qt::black;
-    lineColour.setAlphaF(opacity() / 100.0);
+    painter->setPen(QPen(Qt::black, lineSize, Qt::SolidLine, Qt::RoundCap));
 
-    painter->setPen(QPen(lineColour, 0.04 * m_scale, Qt::SolidLine, Qt::RoundCap));
-    painter->drawPolyline(linePoints, 3);
+    QLineF connectingLines[] =
+    {
+        QLineF(QPointF(0.0, 0.0), upperBob - upperCut),
+        QLineF(upperBob + lowerCut, lowerBob - lowerCut)
+    };
 
+    painter->drawLines(connectingLines, 2);
     painter->setPen(Qt::NoPen);
 
     // Next comes the upper bob
-    QColor actualUpperColour = m_upperColour;
-    actualUpperColour.setAlphaF(m_opacity / 100.0);
-
-    painter->setBrush(QBrush(actualUpperColour));
-    painter->drawEllipse(upperBob, 0.2 * m_scale, 0.2 * m_scale);
+    painter->setBrush(m_upperColour);
+    painter->drawEllipse(upperBob, bobSize, bobSize);
 
     // Finally the lower bob
-    QColor actualLowerColour = m_lowerColour;
-    actualLowerColour.setAlphaF(m_opacity / 100.0);
-
-    painter->setBrush(QBrush(actualLowerColour));
-    painter->drawEllipse(lowerBob, 0.2 * m_scale, 0.2 * m_scale);
+    painter->setBrush(m_lowerColour);
+    painter->drawEllipse(lowerBob, bobSize, bobSize);
 }
 
 void DoublePendulumItem::updateScale(double newScale)
