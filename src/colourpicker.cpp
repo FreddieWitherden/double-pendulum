@@ -30,7 +30,7 @@ ColourPicker::ColourPicker(QWidget *parent)
 {
     setColour(Qt::blue);
 
-    setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
+    setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
 
     connect(this, SIGNAL(clicked()), this, SLOT(selfClicked()));
 }
