@@ -62,6 +62,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
+    void drawIcon(QPainter *painter, const QRect &rect);
+
     void updateScale(double newScale);
     void updateTime(double newTime);
 

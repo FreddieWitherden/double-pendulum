@@ -366,20 +366,7 @@ void MainWindow::updatePendulumIcon()
     QPixmap pm(ui->pendulums->iconSize());
     QPainter painter(&pm);
 
-    QPolygon triangle;
-    triangle << QPoint(0, 0) << QPoint(0, pm.height()) << QPoint(pm.width(), 0);
-
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(activeItem()->upperColour());
-    painter.drawPolygon(triangle);
-
-    triangle[0] = QPoint(pm.width(), pm.height());
-    painter.setBrush(activeItem()->lowerColour());
-    painter.drawPolygon(triangle);
-
-    painter.setPen(Qt::gray);
-    painter.setBrush(Qt::NoBrush);
-    painter.drawRect(pm.rect().adjusted(0, 0, -1, -1));
+    activeItem()->drawIcon(&painter, pm.rect());
 
     // Set the icon to be the generated pixmap
     ui->pendulums->setItemIcon(index, QIcon(pm));

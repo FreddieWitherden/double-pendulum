@@ -196,6 +196,28 @@ void DoublePendulumItem::paint(QPainter *painter,
     painter->drawEllipse(lowerBob, bobSize, bobSize);
 }
 
+void DoublePendulumItem::drawIcon(QPainter *painter, const QRect &rect)
+{
+    painter->save();
+    painter->setPen(Qt::NoPen);
+    painter->setRenderHint(QPainter::Antialiasing, false);
+
+    QPolygon triangle;
+    triangle << rect.topLeft() << rect.bottomLeft() << rect.topRight();
+    painter->setBrush(m_upperColour);
+    painter->drawPolygon(triangle);
+
+    triangle[0] = rect.bottomRight();
+    painter->setBrush(m_lowerColour);
+    painter->drawPolygon(triangle);
+
+    painter->setPen(Qt::gray);
+    painter->setBrush(Qt::NoBrush);
+    painter->drawRect(rect.adjusted(0, 0, -1, -1));
+
+    painter->restore();
+}
+
 void DoublePendulumItem::updateScale(double newScale)
 {
     m_scale = newScale;
