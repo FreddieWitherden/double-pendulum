@@ -400,15 +400,15 @@ void MainWindow::setDefaults()
     ui->dt->setValue(0.005);
     ui->g->setValue(9.81);
 
-    ui->theta1->setValue(0.8);
+    ui->theta1->setValue(1.0);
     ui->omega1->setValue(0.0);
     ui->m1->setValue(1.0);
     ui->l1->setValue(1.0);
 
-    ui->theta2->setValue(0.5);
+    ui->theta2->setValue(0.6);
     ui->omega2->setValue(0.0);
     ui->m2->setValue(0.3);
-    ui->l2->setValue(0.6);
+    ui->l2->setValue(0.65);
 
     const QPair<QColor, QColor> bobColours = MainWindow::randBobColour();
 
