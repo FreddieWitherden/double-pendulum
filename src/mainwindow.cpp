@@ -30,21 +30,22 @@
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass),
-      m_pendulumCount(0), m_maskUpdates(false)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindowClass)
+    , m_statusBarTimer(new QTimer(this))
+    , m_statusBarTime(new QLabel(this))
+    , m_statusBarFps(new QLabel(this))
+    , m_pendulumCount(0)
+    , m_maskUpdates(false)
 {
     ui->setupUi(this);
 
     // Create a timer to update the status bar
-    m_statusBarTimer = new QTimer(this);
     connect(m_statusBarTimer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
 
     // Status bar widgets
-    m_statusBarTime = new QLabel();
     m_statusBarTime->setMinimumWidth(m_statusBarTime->fontMetrics().width("Time: 000.00s"));
     statusBar()->addPermanentWidget(m_statusBarTime);
-
-    m_statusBarFps = new QLabel();
     m_statusBarFps->setMinimumWidth(m_statusBarTime->fontMetrics().width("FPS: 000"));
     statusBar()->addPermanentWidget(m_statusBarFps);
 
@@ -116,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_statusBarTimer;
 }
 
 void MainWindow::about()

@@ -78,10 +78,11 @@ protected slots:
 private:
     Ui::MainWindowClass *ui;
 
+    QTimer *m_statusBarTimer;
+
     QLabel *m_statusBarTime;
     QLabel *m_statusBarFps;
 
-    QTimer *m_statusBarTimer;
     int m_pendulumCount;
     bool m_maskUpdates;
 };
