@@ -22,15 +22,25 @@
 
 #include <QGraphicsScene>
 
-DoublePendulumWidget::DoublePendulumWidget(QWidget *parent) :
-    QGraphicsView(parent), m_scale(10.0), m_simUpdateFreq(1000 / 100),
-    m_fpsUpdateFreq(1000 / 10), m_framesPerSecond(0), m_isPaused(false)
+DoublePendulumWidget::DoublePendulumWidget(QWidget *parent)
+    : QGraphicsView(parent)
+    , m_scale(10.0)
+    , m_simUpdateFreq(1000 / 100)
+    , m_fpsUpdateFreq(1000 / 10)
+    , m_framesPerSecond(0)
+    , m_isPaused(false)
+    , m_info(new DoublePendulumInfoItem)
 {
     // Create a scene to store the pendulums
     QGraphicsScene *scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
     setScene(scene);
+
+    // Hide the info item and add it to the scene on top of the pendula
+    m_info->hide();
+    m_info->setZValue(1.0);
+    scene->addItem(m_info);
 
     // Create a timer to update the simulation
     m_simTimer = new QTimer(this);
@@ -49,6 +59,7 @@ DoublePendulumWidget::~DoublePendulumWidget()
     delete scene();
     delete m_simTimer;
     delete m_fpsTimer;
+    delete m_info;
 }
 
 void DoublePendulumWidget::addPendulum(const QString &name, DoublePendulumItem *pendulum)
@@ -86,6 +97,10 @@ void DoublePendulumWidget::startSim()
     {
         pendulum->start();
     }
+
+    // Update the info box with the current set of pendulums
+    m_info->setPendula(m_pendula);
+    m_info->show();
 
     // Start the timers
     m_simTimer->start(m_simUpdateFreq);
@@ -131,6 +146,9 @@ void DoublePendulumWidget::stopSim()
 
     // We are not paused
     m_isPaused = false;
+
+    // Hide the info box as it is meaningless when the simulation is stopped
+    m_info->hide();
 
     // Request a repaint to clear ourself
     scene()->update();
@@ -211,6 +229,8 @@ void DoublePendulumWidget::advanceSimulation()
     {
         pendulum->updateTime(m_simTime);
     }
+
+    m_info->update();
 }
 
 void DoublePendulumWidget::updateFPS()
@@ -240,4 +260,7 @@ void DoublePendulumWidget::resizeEvent(QResizeEvent *event)
 
     // Update the scene rect
     setSceneRect(newSceneRect);
+
+    // Keep the info box in the top left of the scene
+    m_info->setPos(sceneRect().topLeft() + QPointF(20.0, 20.0));
 }

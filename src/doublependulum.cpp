@@ -30,12 +30,27 @@ DoublePendulum::DoublePendulum(const Pendulum& upper, const Pendulum& lower,
     m_theta2(lower.theta),
     m_omega2(lower.omega),
     m_l2(lower.l), m_m2(lower.m),
-    m_dt(dt), m_g(g), m_time(0.0)
+    m_dt(dt), m_g(g), m_time(0.0),
+    m_initEnergy(energy())
 {
 }
 
 DoublePendulum::~DoublePendulum()
 {
+}
+
+double DoublePendulum::energy() const
+{
+    double pe = -(m_m1 + m_m2) * m_g * m_l1 * cos(m_theta1)
+                - m_m2 * m_g * m_l2 * cos(m_theta2);
+
+    double ke = 0.5 * m_m1 * m_l1*m_l1 * m_omega1*m_omega1
+              + 0.5 * m_m2
+              * (m_l1*m_l1 * m_omega1*m_omega1
+               + m_l2*m_l2 * m_omega2*m_omega2
+               + 2 * m_l1 * m_l2 * m_omega1 * m_omega2 * cos(m_theta1 - m_theta2));
+
+    return pe + ke;
 }
 
 void DoublePendulum::update(double newTime)

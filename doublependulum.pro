@@ -14,14 +14,16 @@ SOURCES += src/main.cpp \
     src/doublependulumrk4.cpp \
     src/doublependulumwidget.cpp \
     src/colourpicker.cpp \
-    src/doublependulumitem.cpp
+    src/doublependulumitem.cpp \
+    src/doublependuluminfoitem.cpp
 HEADERS += src/mainwindow.h \
     src/doublependulum.h \
     src/doublependulumeuler.h \
     src/doublependulumrk4.h \
     src/doublependulumwidget.h \
     src/colourpicker.h \
-    src/doublependulumitem.h
+    src/doublependulumitem.h \
+    src/doublependuluminfoitem.h
 FORMS += src/mainwindow.ui
 RESOURCES += resources.qrc
 

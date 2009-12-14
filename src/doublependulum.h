@@ -96,6 +96,13 @@ public:
         return m_time;
     }
 
+    double initEnergy() const
+    {
+        return m_initEnergy;
+    }
+
+    double energy() const;
+
     /**
      * Returns a string representation of the solver method used.
      */
@@ -184,6 +191,11 @@ protected:
      * Current time for which omega and theta are evaluated for.
      */
     double m_time;
+
+    /**
+     * Initial mechanical energy
+     */
+    double m_initEnergy;
 };
 
 #endif // DOUBLEPENDULUM_H

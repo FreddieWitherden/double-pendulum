@@ -56,6 +56,11 @@ void DoublePendulumItem::stop()
     m_pendulum = 0;
 }
 
+const DoublePendulum *DoublePendulumItem::pendulum()
+{
+    return m_pendulum;
+}
+
 Pendulum& DoublePendulumItem::upper()
 {
     return m_upper;

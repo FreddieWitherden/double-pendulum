@@ -39,6 +39,8 @@ public:
     Pendulum& upper();
     Pendulum& lower();
 
+    const DoublePendulum *pendulum();
+
     QString solver();
     void setSolver(const QString& solver);
 

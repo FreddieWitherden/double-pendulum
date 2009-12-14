@@ -26,6 +26,7 @@
 #include <QMap>
 
 #include "doublependulumitem.h"
+#include "doublependuluminfoitem.h"
 
 class DoublePendulumWidget : public QGraphicsView
 {
@@ -75,6 +76,8 @@ private:
     bool m_isPaused;
 
     QMap<QString, DoublePendulumItem *> m_pendula;
+
+    DoublePendulumInfoItem *m_info;
 };
 
 #endif // DOUBLEPENDULUMWIDGET_H
