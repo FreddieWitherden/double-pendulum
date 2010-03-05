@@ -1,6 +1,6 @@
 /*
     This file is part of Double Pendulum.
-    Copyright (C) 2009  Freddie Witherden
+    Copyright (C) 2009–2010  Freddie Witherden
 
     Double Pendulum is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -123,12 +123,13 @@ void MainWindow::about()
 {
     QMessageBox box(this);
 
-    box.setText(QString("<center>"
-                          "<img src=\":/icons/resources/icon-128.png\">"
-                          "<h3>%1</h3>"
-                          "<p>Version %2</p>"
-                        "</center>"
-                        "<p>Copyright � 2009 Freddie Witherden</p>")
+    box.setText(QString::fromUtf8(
+                "<center>"
+                  "<img src=\":/icons/resources/icon-128.png\">"
+                  "<h3>%1</h3>"
+                  "<p>Version %2</p>"
+                "</center>"
+                "<p>Copyright © 2009–2010 Freddie Witherden</p>")
                 .arg(tr("Double Pendulum Simulator"))
                 .arg(DOUBLEPENDULUM_VERSION));
     box.setWindowTitle("Double Pendulum Simulator");
