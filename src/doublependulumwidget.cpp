@@ -56,10 +56,6 @@ DoublePendulumWidget::DoublePendulumWidget(QWidget *parent)
 
 DoublePendulumWidget::~DoublePendulumWidget()
 {
-    delete scene();
-    delete m_simTimer;
-    delete m_fpsTimer;
-    delete m_info;
 }
 
 void DoublePendulumWidget::addPendulum(const QString &name, DoublePendulumItem *pendulum)
